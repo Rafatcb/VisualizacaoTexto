@@ -8,7 +8,14 @@
 
 import os, glob, string
 from nltk.corpus import stopwords
-import operator, math
+import operator, math, numpy
+from scipy.spatial import distance
+
+class Distancia:
+    def __init__(self, deDoc, paraDoc, distanciaDocs):
+        self.de = deDoc
+        self.para = paraDoc
+        self.distancia = distanciaDocs
 
 contractions_dict = { 
     "ain't": "is not",
@@ -231,18 +238,33 @@ def main():
     palavras_tops = []
     
     i = 0
-    limite = len(todos_tf)
-    while i < limite:
+    while i < qtd_documentos:
         todos_tfidf.append(calcTfidf(todos_tf[i], qtd_documentos, todos_tf))
         palavras_tops.append(escolherTops(todos_tfidf[i], 10))
         i += 1
         
     caracteristicas_documentos = []
     j = 0
-    while j < limite:
+    while j < qtd_documentos:
         caracteristicas_documentos.append(getPalavrasTfidfDocumento(j, todos_tfidf, palavras_tops))
         j += 1
-    print (caracteristicas_documentos)
         
-        
+    distancias = []
+    count = 0
+    for documento in caracteristicas_documentos:
+        k = count
+        while k < qtd_documentos:
+            de = []
+            para = []
+            for key in documento:
+                de.append(documento[key])
+            for key in caracteristicas_documentos[k]:
+                para.append(caracteristicas_documentos[k][key])
+            distancias.append(Distancia(count, k, distance.euclidean(de, para)))
+            k += 1
+        count += 1
+    
+    for distancia in distancias:
+        print ("De: " + str(distancia.de) + " Para: " + str(distancia.para) + " Valor: " + str(distancia.distancia))
+
 main()
