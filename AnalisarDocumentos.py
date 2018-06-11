@@ -8,7 +8,7 @@
 
 import os, glob, string
 from nltk.corpus import stopwords
-import operator, math, numpy
+import operator, math, json
 from scipy.spatial import distance
 
 class Distancia:
@@ -140,6 +140,9 @@ contractions_dict = {
 def expand_contractions(palavra, lista):
     lista.append(contractions_dict[palavra].split())
 
+def getNomeDocumento(arquivo):
+    return os.path.basename(arquivo.name).split(".txt")[0]
+
 def separarPalavras(texto):
     palavras_separadas = [palavra.strip(string.punctuation) for palavra in texto.split()]
     return palavras_separadas
@@ -223,16 +226,41 @@ def getPalavrasTfidfDocumento(num_documento, todos_tfidf, palavras_tops):
                     break
     return documento
 
+def jsonData(distancias, nomes_documentos):
+    json = {}
+    json['nodes'] = []
+    i = 0
+    qtd_documentos = len(nomes_documentos)
+    while i < qtd_documentos:
+        dados = {}
+        dados['id'] = str(i)
+        dados['text'] = nomes_documentos[i]
+        dados['group'] = 0
+        json['nodes'].append(dados)
+        i += 1
+    
+    json['links'] = []
+    for distancia in distancias:
+        dados = {}
+        if (distancia.distancia != 0):
+            dados['source'] = str(distancia.de)
+            dados['target'] = str(distancia.para)
+            dados['value'] = distancia.distancia
+            json['links'].append(dados)
+    return json
+
 def main():
     path = os.getcwd() + '\\Textos'
     todos_tf = []
     todos_tfidf = []
+    nomes_documentos = []
     qtd_documentos = 0
     
     for filename in glob.glob(os.path.join(path, '*.txt')):
-        with open(filename, 'r') as myfile:
+        with open(filename, 'r') as arquivo:
             qtd_documentos += 1
-            palavras_prontas = transformarMaiusculo(filtrar(separarPalavras(myfile.read())))      
+            nomes_documentos.append(getNomeDocumento(arquivo))
+            palavras_prontas = transformarMaiusculo(filtrar(separarPalavras(arquivo.read())))      
             todos_tf.append(calcTf(calcOcorrencias(palavras_prontas)))
     
     palavras_tops = []
@@ -264,7 +292,7 @@ def main():
             k += 1
         count += 1
     
-    for distancia in distancias:
-        print ("De: " + str(distancia.de) + " Para: " + str(distancia.para) + " Valor: " + str(distancia.distancia))
+    with open('data.json', 'w') as arquivo_saida:
+        arquivo_saida.write(json.dumps(jsonData(distancias, nomes_documentos), indent = 4))
 
 main()
