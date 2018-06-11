@@ -167,7 +167,7 @@ def filtrar(palavras):
             palavra = palavra.replace("”", "")
         if '.' in palavra:
             palavra = palavra.replace(".", "")
-        if not palavra.lower() in stop_words:
+        if not palavra in stop_words and palavra != "uh" and palavra != "hey":
             palavras_filtradas.append(palavra) 
     return palavras_filtradas
 
