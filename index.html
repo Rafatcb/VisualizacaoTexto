@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <style>
+        html {
+            background-color: black;
+        }
         .links line {
             stroke: #999;
             stroke-opacity: 0.0;
@@ -22,9 +25,7 @@
 </head>
 <body>
     
-    <div style="text-align:center">
-        <svg id="svg-grafo" width="1000" height="650"></svg>
-    </div>
+    <svg id="svg-grafo" width="1200" height="700"></svg>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
@@ -72,8 +73,7 @@
                 .text(function(d) { return d.text });
 
             node.append("text")
-
-            node.append("title")
+                .append("title")
                 .text(function(d) { return d.id; });
 
             simulation.nodes(graph.nodes)
@@ -90,8 +90,8 @@
                     .attr("y2", function(d) { return d.target.y; });
 
                 node
-                    .attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; });
+                    .attr("cx", function(d) { return d.x = Math.max(6, Math.min(width - 6, d.x)); })
+                    .attr("cy", function(d) { return d.y = Math.max(6, Math.min(height - 6, d.y)); });
                     
                 text.attr("x", function(d) { return d.x; })
                     .attr("y", function(d) { return d.y; });
@@ -133,10 +133,10 @@
             for (var i = 0; i < child.length; i++) {
                 var SVGRect = child[i].getBoundingClientRect();
                 var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                rect.setAttribute("x", SVGRect.x-35);
+                rect.setAttribute("x", SVGRect.x-25);
                 rect.setAttribute("y", SVGRect.y-15);
-                rect.setAttribute("width", 100);
-                rect.setAttribute("height", 35);
+                rect.setAttribute("width", SVGRect.width*1.6);
+                rect.setAttribute("height", SVGRect.height*1.6);
                 rect.setAttribute("fill", "rgba(153, 45, 255, 0.4)");
                 rect.setAttribute("class", "rectangles");
                 svgVar.insertBefore(rect, textElm[0]);
