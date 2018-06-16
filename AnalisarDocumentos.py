@@ -8,7 +8,7 @@
 
 import os, glob, string
 from nltk.corpus import stopwords
-import operator, math, json
+import math, json
 from scipy.spatial import distance
 
 class Distancia:
@@ -203,27 +203,17 @@ def calcTfidf(tf, qtd_documentos, todos_tf):
              
     return tfidf
 
-def escolherTops(tfidf, qtd):
-    texto_ordenado = sorted(tfidf.items(), key=operator.itemgetter(1), reverse=True)
-    j = 0
-    tops = []
-    for palavra in texto_ordenado:
-        j += 1
-        tops.append(palavra)
-        if (j >= qtd):
-            break
-    return tops
-
-def getPalavrasTfidfDocumento(num_documento, todos_tfidf, palavras_tops):
+def getPalavrasTfidfDocumento(num_documento, todos_tfidf):
     documento = {}
-    for palavras_doc in palavras_tops:    
-            for tupla in palavras_doc:
-                for palavra in tupla:
-                    try:
-                        documento[palavra] = todos_tfidf[num_documento][palavra]
-                    except:
-                        documento[palavra] = 0
-                    break
+    for palavras_doc in todos_tfidf:
+        print(str(palavras_doc))
+        for tupla in palavras_doc:
+            for palavra in tupla:
+                try:
+                    documento[palavra] = todos_tfidf[num_documento][palavra]
+                except:
+                    documento[palavra] = 0
+                break
     return documento
 
 def jsonData(distancias, nomes_documentos):
@@ -263,18 +253,15 @@ def main():
             palavras_prontas = transformarMaiusculo(filtrar(separarPalavras(arquivo.read())))      
             todos_tf.append(calcTf(calcOcorrencias(palavras_prontas)))
     
-    palavras_tops = []
-    
     i = 0
     while i < qtd_documentos:
         todos_tfidf.append(calcTfidf(todos_tf[i], qtd_documentos, todos_tf))
-        palavras_tops.append(escolherTops(todos_tfidf[i], 10))
         i += 1
         
     caracteristicas_documentos = []
     j = 0
     while j < qtd_documentos:
-        caracteristicas_documentos.append(getPalavrasTfidfDocumento(j, todos_tfidf, palavras_tops))
+        caracteristicas_documentos.append(getPalavrasTfidfDocumento(j, todos_tfidf))
         j += 1
         
     distancias = []
