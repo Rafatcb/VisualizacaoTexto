@@ -4,3 +4,7 @@ O projeto tem como objetivo mostrar a diferença de proximidade entre um conjunt
 O tratamento dos textos (remoção das _stop words_ e pontuações) e cálculo do **Tf-idf** é feito através do Python, e a visualização em HTML + CSS + JS
 
 No exemplo, temos a transcrição da primeira temporada de Game of Thrones.
+
+### Observações
+* É necessário a hospedagem em um servidor (mesmo que seja local) para o site funcionar corretamente
+* Para a visualização, foi usada a biblioteca D3.js
