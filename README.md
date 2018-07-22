@@ -17,5 +17,6 @@ Desenvolver um sistema que permita a visualização do nível de similaridade en
 ### Conhecimentos Aplicados
 HTML, CSS, Javascript, JSON, Python.
 
+***
 ### Observações
 * É necessário a hospedagem em um servidor (mesmo que seja local) para o site funcionar corretamente.
