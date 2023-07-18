@@ -9,6 +9,8 @@ O tratamento dos textos (remoção das _stop words_ e pontuações) e cálculo d
 
 Os textos utilizados estão na pasta **Textos** e são transcrições dos episódios da primeira temporada de **Game of Thrones**.
 
+![Exemplo do grafo sobre a similaridade entre as transcrições da primeira temporada de Game of Thrones](https://i.imgur.com/zul6v1Z.png)
+
 ***
 ### Objetivo
 Desenvolver um sistema que permita a visualização do nível de similaridade entre um conjunto de textos através da técnica **Galaxy**, utilizando o cálculo **Tf-idf** e o cálculo de distância entre os vetores de característica de cada texto.
