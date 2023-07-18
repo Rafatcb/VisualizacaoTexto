@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 ## Antes de utilizar este programa, é preciso ter instalado o ntlk no seu computador
-## para instalar via comandos, basta digitar:
-##        import ntlk
-##        ntlk.download()
+## para instalar via terminal, basta digitar:
+##        pip install nltk
+## E então, num terminal executando Python:
+##        import nltk
+##        nltk.download('stopwords')
 ## Após isso irá abrir um instalador para a biblioteca
 
 import os, glob, string

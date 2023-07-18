@@ -1,5 +1,5 @@
 # Visualização de Texto
-Projeto realizado na disciplina de Visualização de Informação, UNICAMP - 20187.
+Projeto realizado na disciplina de Visualização de Informação, UNICAMP - 2018.
 
 ***
 ### Descrição
@@ -19,4 +19,4 @@ HTML, CSS, Javascript, JSON, Python.
 
 ***
 ### Observações
-* É necessário a hospedagem em um servidor (mesmo que seja local) para o site funcionar corretamente.
+* É necessário a hospedagem em um servidor (mesmo que seja local) para o site funcionar corretamente devido ao CORS. Caso você tenha Python 3 instalado, pode executar `python -m http.server` e acessar o arquivo através do navegador com `http://localhost:8000`.
